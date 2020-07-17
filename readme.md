@@ -5,3 +5,4 @@ inside the project folder:-
 2. npm start
 3. cd client
 4. run npm install
+5. npm start
