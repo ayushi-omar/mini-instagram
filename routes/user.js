@@ -8,18 +8,18 @@ const requiredLogin = require("../middleware/requiredLogin");
 module.exports = router;
 
 router.get("/user/:id", requiredLogin, (req, res) => {
-    console.log("req.params user>>", req.params);
+    // console.log("req.params user>>", req.params);
     User.findOne({ _id: req.params.id })
         .select("-password")
         .then(user => {
-            console.log("other user>>", user);
+            // console.log("other user>>", user);
             Post.find({ postedBy: req.params.id })
                 .populate("postedBy", "_id name")
                 .exec((err, posts) => {
                     if (err) {
                         return res.status(422).json({ error: err });
                     }
-                    console.log("posts user>>", posts);
+                    // console.log("posts user>>", posts);
                     let result = { user, posts }
                     res.json(result);
                 })
@@ -67,7 +67,7 @@ router.put("/unfollow", requiredLogin, (req, res) => {
 })
 
 router.put("/uploadProfile", requiredLogin, (req, res) => {
-    console.log("uploadProfile", req.body.url);
+    // console.log("uploadProfile", req.body.url);
     User.findByIdAndUpdate(req.user._id, { $set: { profile: req.body.url } }, { new: true }, (err, result) => {
         if (err) {
             return res.status(422).json({ error: err })

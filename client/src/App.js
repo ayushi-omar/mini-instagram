@@ -1,4 +1,4 @@
-import React, { useEffect, createContext, useReducer, useContext } from 'react';
+import React, { useEffect, createContext, useReducer, useContext } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
@@ -11,7 +11,6 @@ import UserProfile from "./components/screens/UserProfile";
 import SubscribeUserPost from "./components/screens/SubscribeUser";
 import ResetPassword from "./components/screens/ResetPassword";
 import NewPassword from "./components/screens/NewPassword";
-
 
 import { initialState, reducer } from "./reducers/UserReducer";
 
@@ -27,28 +26,47 @@ const Routing = () => {
       dispatch({ type: "USER", payload: user });
       history.push("/");
     } else {
-      if (!history.location.pathname.startsWith('/reset'))
+      if (!history.location.pathname.startsWith("/reset"))
         history.push("/signin");
     }
-  }, [])
+  }, []);
   return (
     <Switch>
-      <Route exact path="/"><Home /></Route>
-      <Route exact path="/profile"><Profile /></Route>
-      <Route path="/signup"><Signup /></Route>
-      <Route path="/signin"><Signin /></Route>
-      <Route path="/create"><CreatePost /></Route>
-      <Route path="/profile/:userId"><UserProfile /></Route>
-      <Route path="/myFollowingPost"><SubscribeUserPost /></Route>
-      <Route exact path="/reset"><ResetPassword /></Route>
-      <Route path="/reset/:token"><NewPassword /></Route>
+      <Route exact path="/">
+        <Home />
+      </Route>
+      {/* <Route exact path="/"><SubscribeUserPost /></Route> */}
 
+      <Route exact path="/profile">
+        <Profile />
+      </Route>
+      <Route path="/signup">
+        <Signup />
+      </Route>
+      <Route path="/signin">
+        <Signin />
+      </Route>
+      <Route path="/create">
+        <CreatePost />
+      </Route>
+      <Route path="/profile/:userId">
+        <UserProfile />
+      </Route>
+      <Route path="/home">
+        <SubscribeUserPost />
+      </Route>
+      <Route exact path="/reset">
+        <ResetPassword />
+      </Route>
+      <Route path="/reset/:token">
+        <NewPassword />
+      </Route>
     </Switch>
   );
-}
+};
 
 function App() {
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(reducer, initialState);
   return (
     <UserContext.Provider value={{ state, dispatch }}>
       <BrowserRouter>
@@ -56,7 +74,6 @@ function App() {
         <Routing />
       </BrowserRouter>
     </UserContext.Provider>
-
   );
 }
 

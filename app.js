@@ -29,7 +29,8 @@ if (process.env.NODE_ENV == "production") {
     })
 
 }
-
 app.listen(PORT, () => {
     console.log("server is running", PORT);
 })
+
+// heroku logs (to find the error)
